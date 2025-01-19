@@ -1,11 +1,20 @@
 {
-  "name": "backend",
+  "name": "chat-backend",
   "module": "index.ts",
   "type": "module",
+  "scripts": {
+  	"type-check": "tsc --noEmit",
+		"dev": "bun --watch src/index.ts",
+		"start": "bun run type-check && bunx src/index.ts"
+  },
   "devDependencies": {
     "@types/bun": "latest"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@types/express": "^5.0.0",
+    "express": "^4.21.2"
   }
 }

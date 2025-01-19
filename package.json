@@ -1,12 +1,17 @@
 {
   "name": "express-react-chat-monorepo",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "concurrently \"bun run dev:frontend\" \"bun run dev:backend\"",
+    "dev:frontend": "cd ./packages/frontend && bunx run dev",
+    "dev:backend": "cd ./packages/backend && bunx run dev",
+    "start:frontend": "cd packages/frontend && bunx run preview",
+    "start:backend": "cd packages/backend && bunx run start"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "dependencies": {
+    "concurrently": "^9.1.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
 }
