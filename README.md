@@ -9,7 +9,7 @@ pnpm install
 2. Run the following command to start the development server:
 
 ```bash
-pnpm dev
+pnpm run dev
 ```
 
 for some reason, bunx run dev is not working with concurrently so i have to run it using pnpm
