@@ -3,10 +3,11 @@
   "private": true,
   "scripts": {
     "dev": "concurrently \"bun run dev:frontend\" \"bun run dev:backend\"",
-    "dev:frontend": "cd ./packages/frontend && bunx run dev",
-    "dev:backend": "cd ./packages/backend && bunx run dev",
-    "start:frontend": "cd packages/frontend && bunx run preview",
-    "start:backend": "cd packages/backend && bunx run start"
+    "type-check:backend": "pnpm --filter chat-backend run type-check",
+    "dev:frontend": "pnpm --filter chat-frontend run dev",
+    "dev:backend": "pnpm --filter chat-backend run dev",
+    "start:frontend": "pnpm --filter chat-frontend run preview",
+    "start:backend": "pnpm --filter chat-backend run start"
   },
   "dependencies": {
     "concurrently": "^9.1.2"

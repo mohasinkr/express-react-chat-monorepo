@@ -1,13 +1,14 @@
 {
-  "name": "frontend",
+  "name": "chat-frontend",
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "proxy": "http://localhost:3001",
   "scripts": {
     "dev": "bunx --bun vite",
     "build": "bunx --bun tsc -b && bunx --bun vite build",
     "clean": "rm -rf node_modules",
-    "lint": "eslint .",
+    "lint": "bun eslint .",
     "preview": "bunx --bun vite preview"
   },
   "dependencies": {
