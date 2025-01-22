@@ -1,4 +1,5 @@
 import vine from "@vinejs/vine";
+import type { Infer } from "@vinejs/vine/types";
 
 const chatSchema = vine.object({
 	type: vine.enum(["one-on-one", "group"]),
@@ -18,5 +19,8 @@ const messageSchema = vine.object({
 
 const compiledMessageSchema = vine.compile(messageSchema);
 const compiledChatSchema = vine.compile(chatSchema);
+
+export type TChat = Infer<typeof chatSchema>;
+export type TMessage = Infer<typeof messageSchema>;
 
 export { compiledChatSchema, compiledMessageSchema };
