@@ -1,8 +1,9 @@
 import express, {
-  type NextFunction,
-  type Request,
-  type Response,
+	type NextFunction,
+	type Request,
+	type Response,
 } from "express";
+import { connectToDB } from "./config/db.config";
 import { globalErrorHandler } from "./middleware/errorHandler.middleware";
 import { initMiddlewares } from "./middleware/index";
 import indexRouter from "./routes/index.routes";
@@ -17,32 +18,33 @@ const app = express();
 initMiddlewares(app);
 
 app.get("/", (_, res: express.Response) => {
-  res.send(`Yep, the server is running🏃 on ${PORT}`);
+	res.send(`Yep, the server is running🏃 on ${PORT}`);
 });
 
 app.get("/gen-error", (_req: Request, _res: Response, next: NextFunction) => {
-  next(new Error("Unknown exception occured!"));
+	next(new Error("Unknown exception occured!"));
 });
 
 app.use("/api/v1", indexRouter);
 
 app.get("/health-check", (_req, res) => {
-  const uptimeInSeconds = process.uptime();
-  const uptimeInHours = Math.floor(uptimeInSeconds / 3600);
-  const uptimeInMinutes = Math.floor((uptimeInSeconds % 3600) / 60);
-  const uptimeInSecondsRemaining = Math.floor(uptimeInSeconds % 60);
+	const uptimeInSeconds = process.uptime();
+	const uptimeInHours = Math.floor(uptimeInSeconds / 3600);
+	const uptimeInMinutes = Math.floor((uptimeInSeconds % 3600) / 60);
+	const uptimeInSecondsRemaining = Math.floor(uptimeInSeconds % 60);
 
-  const uptime = `${uptimeInHours}h ${uptimeInMinutes}m ${uptimeInSecondsRemaining}s`;
-  const healthcheck = {
-    uptime,
-    message: "OK",
-    timestamp: new Date().toISOString(),
-  };
-  res.send(healthcheck);
+	const uptime = `${uptimeInHours}h ${uptimeInMinutes}m ${uptimeInSecondsRemaining}s`;
+	const healthcheck = {
+		uptime,
+		message: "OK",
+		timestamp: new Date().toISOString(),
+	};
+	res.send(healthcheck);
 });
 
 app.use(globalErrorHandler);
 
 app.listen(PORT, async () => {
-  console.log(`Application started on URL ${HOST}:${PORT} 🎉`);
+	connectToDB();
+	console.log(`Application started on URL ${HOST}:${PORT} 🎉`);
 });
