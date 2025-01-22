@@ -3,7 +3,7 @@ import express, {
 	type Request,
 	type Response,
 } from "express";
-import { connectToDB } from "./config/db.config";
+import { initializeDatabase } from "./config/db.config";
 import { globalErrorHandler } from "./middleware/errorHandler.middleware";
 import { initMiddlewares } from "./middleware/index";
 import indexRouter from "./routes/index.routes";
@@ -45,6 +45,6 @@ app.get("/health-check", (_req, res) => {
 app.use(globalErrorHandler);
 
 app.listen(PORT, async () => {
-	connectToDB();
+	initializeDatabase();
 	console.log(`Application started on URL ${HOST}:${PORT} 🎉`);
 });
