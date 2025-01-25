@@ -7,7 +7,10 @@
     "dev:frontend": "pnpm --filter chat-frontend run dev",
     "dev:backend": "pnpm --filter chat-backend run dev",
     "start:frontend": "pnpm --filter chat-frontend run preview",
-    "start:backend": "pnpm --filter chat-backend run start"
+    "start:backend": "pnpm --filter chat-backend run start",
+    "format:backend": "pnpm --filter chat-backend run biome:format",
+    "format:frontend": "pnpm --filter chat-frontend run biome:format",
+    "format": "pnpm run format:frontend && pnpm run format:backend"
   },
   "dependencies": {
     "concurrently": "^9.1.2"

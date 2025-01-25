@@ -1,8 +1,26 @@
-import { database } from "@/config/db.config"; 
+import { database } from "@/config/db.config";
+import type { TUser } from "@/schemas/user.schema";
 
-const loginService = (email: string, password: string) => {
-	const collection = database.collection("users");
-    
+const registerUser = async (email: string, password: string) => {
+	const users = database.collection<TUser>("users");
+	return await users.insertOne({
+		email,
+		password,
+		createdAt: new Date(),
+		lastOnline: new Date(),
+		profilePicture: null,
+		username: "",
+	});
 };
 
-export { loginService };
+const loginUser = async (email: string) => {
+	const users = database.collection<TUser>("users");
+	return users.findOne({ email });
+};
+
+const getUserById = async (id: string) => {
+	const users = database.collection<TUser>("users");
+	return users.findOne({ _id: id });
+};
+
+export { loginUser, registerUser, getUserById };

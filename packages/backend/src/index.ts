@@ -1,3 +1,6 @@
+import { initMiddlewares } from "@/middleware";
+import { readAllUsers } from "@/services/users.service.ts";
+import { asyncHandler } from "@/utils/asyncHandler.ts";
 import express, {
 	type NextFunction,
 	type Request,
@@ -5,7 +8,6 @@ import express, {
 } from "express";
 import { initializeDatabase } from "./config/db.config";
 import { globalErrorHandler } from "./middleware/errorHandler.middleware";
-import { initMiddlewares } from "./middleware/index";
 import indexRouter from "./routes/index.routes";
 
 // Use Bun's built-in env
@@ -20,6 +22,19 @@ initMiddlewares(app);
 app.get("/", (_, res: express.Response) => {
 	res.send(`Yep, the server is running🏃 on ${PORT}`);
 });
+
+app.get(
+	"/read-users",
+	asyncHandler(async (_req, res: express.Response) => {
+		const response = await readAllUsers();
+		console.log(response);
+		res.end();
+		//	res.json({
+		//		status: true,
+		//		data: response,
+		//	})
+	}),
+);
 
 app.get("/gen-error", (_req: Request, _res: Response, next: NextFunction) => {
 	next(new Error("Unknown exception occured!"));

@@ -1,6 +1,6 @@
 import {
-  loginController,
-  registerController,
+	loginController,
+	registerController,
 } from "@/controller/auth.controller";
 import { authRateLimiter } from "@/middleware/rateLimiter.middleware";
 import { Router } from "express";
