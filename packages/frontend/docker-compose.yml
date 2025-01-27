@@ -1,0 +1,26 @@
+services:
+    dev:
+      container_name: chat-frontend-dev
+      build:
+        context: .
+        target: development
+      volumes:
+        - .:/app
+        - /app/node_modules
+      ports:
+        - "5173:5173"
+      environment:
+        - NODE_ENV=development
+      command: pnpm dev
+  
+    prod:
+      container_name: chat-frontend-prod
+      build:
+        context: .
+        target: production
+      ports:
+        - "5173:3000"
+      environment:
+        - NODE_ENV=production
+      command: npm start
+  
