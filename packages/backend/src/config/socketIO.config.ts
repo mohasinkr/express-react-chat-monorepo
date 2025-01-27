@@ -4,7 +4,7 @@ import { Server as SocketIOServer } from "socket.io";
 export const initializeSocketIO = (httpServer: HttpServer): SocketIOServer => {
 	const io = new SocketIOServer(httpServer, {
 		cors: {
-			origin: "*",
+			origin: "localhost:5000",
 			methods: ["GET", "POST"],
 		},
 	});
