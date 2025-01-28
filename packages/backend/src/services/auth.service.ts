@@ -18,9 +18,4 @@ const loginUser = async (email: string) => {
 	return users.findOne({ email });
 };
 
-const getUserById = async (id: string) => {
-	const users = database.collection<TUser>("users");
-	return users.findOne({ _id: id });
-};
-
-export { loginUser, registerUser, getUserById };
+export { loginUser, registerUser };
