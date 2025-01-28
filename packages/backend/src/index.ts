@@ -10,6 +10,7 @@ import { initializeDatabase } from "./config/db.config";
 import { globalErrorHandler } from "./middleware/errorHandler.middleware";
 import indexRouter from "./routes/index.routes";
 import { initializeSocketIO } from "./config/socketIO.config";
+import { authMiddleware } from "./middleware/auth.middleware";
 
 // Use Bun's built-in env
 const HOST = process.env.HOST || "http://localhost";
@@ -33,14 +34,15 @@ app.get("/", (_, res: express.Response) => {
 
 app.get(
   "/read-users",
+  authMiddleware,
   asyncHandler(async (_req, res: express.Response) => {
     const response = await readAllUsers();
-    console.log(response);
-    res.end();
-    //	res.json({
-    //		status: true,
-    //		data: response,
-    //	})
+    // console.log(response);
+    // res.end();
+    	res.json({
+    		status: true,
+    		data: response,
+    	})
   })
 );
 
