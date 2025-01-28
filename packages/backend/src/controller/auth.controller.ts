@@ -12,25 +12,29 @@ import { generateToken } from "@/utils/generateJWT";
 import type { Request, Response } from "express";
 
 const registerController = asyncHandler(async (req: Request, res: Response) => {
-	const { email, password, password_confirmation } = req.body;
+	const { email, password, password_confirmation, username } = req.body;
 
 	await compiledRegisterSchema
-		.validate({ email, password, password_confirmation })
+		.validate({ email, password, password_confirmation, username })
 		.catch((error) => {
 			throw new Error(error.message);
 		});
 
 	const hashedPassword = await Bun.password.hash(password, "bcrypt");
 
-	const response = await registerUser(email, hashedPassword);
+	const response = await registerUser(email, hashedPassword, username);
 	if (response.acknowledged) {
-		const token = generateToken({ email, password });
+		const token = generateToken({ email, username });
 
 		res.status(200).json({
 			success: true,
 			message: INFO_MESSAGES.USER_CREATED,
 			data: {
-				email,
+				user: {
+					id: response.insertedId,
+					email,
+					username,
+				},
 				token,
 			},
 		});
@@ -57,7 +61,7 @@ const loginController = asyncHandler(async (req: Request, res: Response) => {
 		userId: document._id,
 		email: document.email,
 		username: document.username,
-	}
+	};
 
 	const token = generateToken(JWTPayload);
 
@@ -65,6 +69,11 @@ const loginController = asyncHandler(async (req: Request, res: Response) => {
 		success: true,
 		message: INFO_MESSAGES.LOGIN_SUCCESS,
 		data: {
+			user: {
+				id: document._id,
+				email: document.email,
+				username: document.username,
+			},
 			token,
 		},
 	});

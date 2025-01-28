@@ -9,6 +9,6 @@ const readAllUsers = async () => {
 const readUser = async (by: Partial<TUser>) => {
 	const response = await database.collection<TUser>("users").findOne(by);
 	return response;
-}
+};
 
 export { readAllUsers, readUser };

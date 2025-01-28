@@ -8,6 +8,11 @@ const registerSchema = vine.object({
 		.email()
 		.use(isUnique({ collection: "users", field: "email" })),
 	password: vine.string().minLength(8).confirmed(),
+	username: vine
+		.string()
+		.minLength(3)
+		.maxLength(20)
+		.use(isUnique({ collection: "users", field: "username" })),
 });
 
 const loginSchema = vine.object({
