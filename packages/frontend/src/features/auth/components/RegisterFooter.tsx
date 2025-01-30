@@ -1,7 +1,6 @@
+import { Link } from "@tanstack/react-router";
+
 const RegisterFormFooter = () => {
-
-  function handleSignInClick() {}
-
   return (
     <div className="text-center">
       <div className="relative py-4">
@@ -14,12 +13,12 @@ const RegisterFormFooter = () => {
           </span>
         </div>
       </div>
-      <button
-        onClick={handleSignInClick}
+      <Link
+        to="/login"
         className="text-sm font-medium text-indigo-600 hover:text-indigo-500 transition-colors hover:underline"
       >
         Sign in
-      </button>
+      </Link>
     </div>
   );
 };

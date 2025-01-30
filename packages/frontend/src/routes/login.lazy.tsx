@@ -1,4 +1,4 @@
-import { createLazyFileRoute } from "@tanstack/react-router";
+import { createLazyFileRoute, Link } from "@tanstack/react-router";
 import React, { useState } from "react";
 import {
   KeyRound,
@@ -13,10 +13,9 @@ export const Route = createLazyFileRoute("/login")({
 
 interface RegisterScreenProps {
   onRegister: (username: string, password: string) => void;
-  onSignInClick: () => void;
 }
 
-function LoginScreen({ onRegister, onSignInClick }: RegisterScreenProps) {
+function LoginScreen({ onRegister }: RegisterScreenProps) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [focusedInput, setFocusedInput] = useState<
@@ -38,7 +37,7 @@ function LoginScreen({ onRegister, onSignInClick }: RegisterScreenProps) {
             </div>
           </div>
           <h2 className="text-3xl font-bold text-gray-900">
-            Create your account
+            Login to your account
           </h2>
           <p className="mt-2 text-sm text-gray-600">
             Join thousands of users in our chat community
@@ -117,12 +116,12 @@ function LoginScreen({ onRegister, onSignInClick }: RegisterScreenProps) {
             </div>
           </div>
 
-          <button
-            onClick={onSignInClick}
+          <Link
+            to="/register"
             className="text-sm font-medium text-indigo-600 hover:text-indigo-500 transition-colors hover:underline"
           >
             Create an account
-          </button>
+          </Link>
         </div>
       </div>
     </div>
