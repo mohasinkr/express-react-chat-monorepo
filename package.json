@@ -2,7 +2,7 @@
   "name": "express-react-chat-monorepo",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"bun run dev:frontend\" \"bun run dev:backend\"",
+    "dev": "pnpm -r dev",
     "type-check:backend": "pnpm --filter chat-backend run type-check",
     "dev:frontend": "pnpm --filter chat-frontend run dev",
     "dev:backend": "pnpm --filter chat-backend run dev",
@@ -11,9 +11,6 @@
     "format:backend": "pnpm --filter chat-backend run biome:format",
     "format:frontend": "pnpm --filter chat-frontend run biome:format",
     "format": "pnpm run format:frontend && pnpm run format:backend"
-  },
-  "dependencies": {
-    "concurrently": "^9.1.2"
   },
   "devDependencies": {
     "typescript": "^5.0.0"
