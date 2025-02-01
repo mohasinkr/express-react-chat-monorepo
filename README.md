@@ -1,3 +1,5 @@
+![Static Badge](https://img.shields.io/badge/Dev_Status-in_progress-green)
+
 ## Starting the dev server (Frontend and Backend)
 
 1. Run the following command to install the dependencies:
