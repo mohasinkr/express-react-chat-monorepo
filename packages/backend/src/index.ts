@@ -18,13 +18,6 @@ const PORT = Number(process.env.PORT || "5000");
 
 const app = express();
 
-const expressServer = app.listen(PORT, async () => {
-	await initializeDatabase();
-	console.log(`Application started on URL ${HOST}:${PORT} 🎉`);
-});
-
-initializeSocketIO(expressServer);
-
 // setup the common middlewares (logging,body parser, cors, rate limiter etc )
 initMiddlewares(app);
 
@@ -68,3 +61,10 @@ app.get("/health-check", (_req, res) => {
 });
 
 app.use(globalErrorHandler);
+
+const expressServer = app.listen(PORT, async () => {
+	await initializeDatabase();
+	console.log(`Application started on URL ${HOST}:${PORT} 🎉`);
+});
+
+initializeSocketIO(expressServer);
