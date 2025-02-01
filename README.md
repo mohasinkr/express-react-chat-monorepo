@@ -28,5 +28,5 @@ pnpm run dev
   5. MongoDB
 
 Monorepo workspace management using pnpm workspaces 🧑‍💻. <br>
-Using Bun runtime its speed and native TS support ⚡.
+Using Bun runtime for its speed and native TS support ⚡.
 
