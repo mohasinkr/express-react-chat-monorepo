@@ -2,7 +2,7 @@ export const ERROR_MESSAGES = {
 	VALIDATION_FAILED: "Validation failed. Please check your input.",
 	DATABASE_ERROR: "An error occurred while interacting with the database.",
 	RESOURCE_NOT_FOUND: "The requested resource could not be found.",
-	USER_NOT_FOUND: "The user could not be found.",
+	USER_NOT_FOUND: "The user does not exist.",
 	FORBIDDEN: "You do not have permission to access this resource.",
 	CONFLICT: "A conflict occurred with the current state of the resource.",
 	TOO_MANY_REQUESTS: "You have made too many requests. Please try again later.",
