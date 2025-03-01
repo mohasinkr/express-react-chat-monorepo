@@ -5,9 +5,10 @@ import { useState } from "react";
 const RegisterForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [confirm_password, setConfirmPassword] = useState("");
   const [email, setEmail] = useState("");
   const [focusedInput, setFocusedInput] = useState<
-    "username" | "password" | "email" | null
+    "username" | "password" | "email" | "password_confirmation" | null
   >(null);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -16,7 +17,7 @@ const RegisterForm = () => {
 
   return (
     <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-      <div className="space-y-4">
+      <div className="space-y-3">
         <div className="relative group">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
             <UserCircle2
@@ -78,6 +79,28 @@ const RegisterForm = () => {
             onBlur={() => setFocusedInput(null)}
             className="appearance-none relative block w-full px-3 py-3 pl-10 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500  sm:text-sm transition-all duration-200 bg-white/50 backdrop-blur-sm group-hover:bg-white/70"
             placeholder="Password"
+          />
+        </div>
+
+        <div className="relative group">
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
+            <KeyRound
+              className={`h-5 w-5 transition-colors duration-200 ${
+                focusedInput === "password"
+                  ? "text-indigo-500"
+                  : "text-gray-400"
+              }`}
+            />
+          </div>
+          <input
+            type="password"
+            required
+            value={confirm_password}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            onFocus={() => setFocusedInput("password_confirmation")}
+            onBlur={() => setFocusedInput(null)}
+            className="appearance-none relative block w-full px-3 py-3 pl-10 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500  sm:text-sm transition-all duration-200 bg-white/50 backdrop-blur-sm group-hover:bg-white/70"
+            placeholder="Confirm Password"
           />
         </div>
       </div>

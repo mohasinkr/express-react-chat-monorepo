@@ -1,31 +1,40 @@
-import { createLazyFileRoute, Link } from "@tanstack/react-router";
+import { Button } from "@/components/button";
+import { useLogin } from "@/features/auth/services/login";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowRight, KeyRound, MessageCircle, UserCircle2 } from "lucide-react";
 import React, { useState } from "react";
-import {
-  KeyRound,
-  UserCircle2,
-  ArrowRight,
-  MessageCircle,
-} from "lucide-react";
+import { toast } from "sonner";
 
-export const Route = createLazyFileRoute("/login")({
+export const Route = createFileRoute("/login")({
   component: LoginScreen,
 });
 
-interface RegisterScreenProps {
-  onRegister: (username: string, password: string) => void;
-}
-
-function LoginScreen({ onRegister }: RegisterScreenProps) {
-  const [username, setUsername] = useState("");
+function LoginScreen() {
+  const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
-  const [focusedInput, setFocusedInput] = useState<
-    "username" | "password" | null
-  >(null);
+  const [focusedInput, setFocusedInput] = useState<"email" | "password" | null>(
+    null
+  );
+
+  const { mutate: login, isPending } = useLogin(handleSuccess, handleError);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onRegister(username, password);
+
+    const credentials = {
+      email,
+      password,
+    };
+    login(credentials);
   };
+
+  function handleSuccess() {
+    toast.success("Login successful");
+  }
+
+  function handleError() {
+    toast.error("Invalid credentials");
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 register-pattern">
@@ -47,10 +56,10 @@ function LoginScreen({ onRegister }: RegisterScreenProps) {
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="space-y-4">
             <div className="relative group">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
                 <UserCircle2
                   className={`h-5 w-5 transition-colors duration-200 ${
-                    focusedInput === "username"
+                    focusedInput === "email"
                       ? "text-indigo-500"
                       : "text-gray-400"
                   }`}
@@ -59,17 +68,17 @@ function LoginScreen({ onRegister }: RegisterScreenProps) {
               <input
                 type="text"
                 required
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                onFocus={() => setFocusedInput("username")}
+                value={email}
+                onChange={(e) => setemail(e.target.value)}
+                onFocus={() => setFocusedInput("email")}
                 onBlur={() => setFocusedInput(null)}
-                className="appearance-none relative block w-full px-3 py-3 pl-10 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm transition-all duration-200 bg-white/50 backdrop-blur-sm group-hover:bg-white/70"
-                placeholder="Username"
+                className="appearance-none relative block w-full px-3 py-3 pl-10 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500  sm:text-sm transition-all duration-200 bg-white/50 backdrop-blur-sm group-hover:bg-white/70"
+                placeholder="Email"
               />
             </div>
 
             <div className="relative group">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
                 <KeyRound
                   className={`h-5 w-5 transition-colors duration-200 ${
                     focusedInput === "password"
@@ -85,22 +94,23 @@ function LoginScreen({ onRegister }: RegisterScreenProps) {
                 onChange={(e) => setPassword(e.target.value)}
                 onFocus={() => setFocusedInput("password")}
                 onBlur={() => setFocusedInput(null)}
-                className="appearance-none relative block w-full px-3 py-3 pl-10 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm transition-all duration-200 bg-white/50 backdrop-blur-sm group-hover:bg-white/70"
+                className="appearance-none relative block w-full px-3 py-3 pl-10 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500  sm:text-sm transition-all duration-200 bg-white/50 backdrop-blur-sm group-hover:bg-white/70"
                 placeholder="Password"
               />
             </div>
           </div>
 
           <div>
-            <button
+            <Button
+              disabled={isPending}
               type="submit"
               className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-200 hover:shadow-lg"
             >
               <span className="absolute left-0 inset-y-0 flex items-center pl-3">
                 <ArrowRight className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400 transition-colors" />
               </span>
-              Create Account
-            </button>
+              {isPending ? "Loading..." : "Login"}
+            </Button>
           </div>
         </form>
 
